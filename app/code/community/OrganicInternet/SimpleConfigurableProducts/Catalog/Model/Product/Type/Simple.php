@@ -7,7 +7,7 @@ class OrganicInternet_SimpleConfigurableProducts_Catalog_Model_Product_Type_Simp
     private function getCpid()
     {
         $cpid = $this->getProduct()->getCustomOption('cpid');
-        if ($cpid) {
+        if (strlen($cpid)) {
             return $cpid;
         }
 
