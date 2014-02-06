@@ -386,10 +386,12 @@ Product.Config.prototype.reloadOptionLabels = function(element){
     var selectedPrice;
     var childProducts = this.config.childProducts;
 
-    //Don't update elements that have a selected option
-    if(element.options[element.selectedIndex].config){
-        return;
-    }
+    try {
+        //Don't update elements that have a selected option
+        if(element.options[element.selectedIndex].config){
+            return;
+        }
+    } catch(e){}
 
     for(var i=0;i<element.options.length;i++){
         if(element.options[i].config){
