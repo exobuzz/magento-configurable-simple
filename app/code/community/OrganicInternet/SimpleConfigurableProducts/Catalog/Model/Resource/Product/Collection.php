@@ -9,7 +9,7 @@ class OrganicInternet_SimpleConfigurableProducts_Catalog_Model_Resource_Product_
      * 
      * @see Mage_Catalog_Model_Resource_Product_Collection::_productLimitationJoinPrice()
      */
-    protected function _productLimitationJoinPrice()
+    protected function _productLimitationPrice($joinLeft = false)
     {
         $filters = $this->_productLimitationFilters;
         if (empty($filters['use_price_index'])) {
@@ -34,8 +34,11 @@ class OrganicInternet_SimpleConfigurableProducts_Catalog_Model_Resource_Product_
             $colls = array('indexed_price'=>$indexedExpr,'price', 'tax_class_id', 'final_price', 
                 'minimal_price'=>$minimalExpr , 'min_price', 'max_price', 'tier_price');
             $tableName = array('price_index' => $this->getTable('catalog/product_index_price'));
-            $select->join($tableName, $joinCond, $colls);
-                
+            if ($joinLeft) {
+                $select->joinLeft($tableName, $joinCond, $colls);
+            } else {
+                $select->join($tableName, $joinCond, $colls);
+            }
             // Set additional field filters
             foreach ($this->_priceDataFieldFilters as $filterData) {
                 $select->where(call_user_func_array('sprintf', $filterData));
