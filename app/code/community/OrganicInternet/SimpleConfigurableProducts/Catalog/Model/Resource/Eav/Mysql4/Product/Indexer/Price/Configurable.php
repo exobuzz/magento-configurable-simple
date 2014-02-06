@@ -100,6 +100,8 @@ class OrganicInternet_SimpleConfigurableProducts_Catalog_Model_Resource_Eav_Mysq
         #3rd) $price, in case all finalPrices are NULL. (this gives the lowest price for all associated products when they're all out of stock)
         $sortExpr = new Zend_Db_Expr("${isInStockExpr} DESC, pi.final_price ASC, pi.price ASC");
         $select->order($sortExpr);
+        // query hack - see https://redmine.oxfordinspire.co.uk/issues/668 and https://github.com/organicinternet/magento-configurable-simple/issues/170
+        $select->limit(100000000);
 
         /**
          * Add additional external limitation
